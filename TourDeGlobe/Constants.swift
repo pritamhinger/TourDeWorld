@@ -15,7 +15,7 @@ extension FlickrClient{
         static let Scheme = "https"
         static let Host = "api.flickr.com"
         static let Path = "/services/rest"
-        static let APIKey = "01ba3f37c9b38dd927ac8105c1ec5e97"
+        static let APIKey = "954afa5e9abf813f08eb56aace2a7dda"
     }
     
     // MARK: - Flickr API Method Names

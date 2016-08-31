@@ -12,12 +12,13 @@
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="images" inverseEntity="Location" syncable="YES"/>
     </entity>
     <entity name="Location" representedClassName=".Location" syncable="YES">
+        <attribute name="creationDate" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="images" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="location" inverseEntity="Image" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Location" positionX="-207" positionY="-45" width="128" height="88"/>
+        <element name="Location" positionX="-45" positionY="0" width="128" height="105"/>
         <element name="Image" positionX="-18" positionY="45" width="128" height="180"/>
     </elements>
 </model>

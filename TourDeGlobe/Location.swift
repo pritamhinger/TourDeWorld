@@ -11,7 +11,16 @@ import CoreData
 
 
 class Location: NSManagedObject {
-
-// Insert code here to add functionality to your managed object subclass
-
+    
+    convenience init(latitude:Double, longitude:Double, context: NSManagedObjectContext) {
+        if let entity = NSEntityDescription.entityForName("Location", inManagedObjectContext: context){
+            self.init(entity: entity, insertIntoManagedObjectContext: context)
+            self.latitude = NSNumber(double: latitude)
+            self.longitude = NSNumber(double: longitude)
+            self.creationDate = NSDate()
+        }
+        else{
+            fatalError("Unable to find Entity name!")
+        }
+    }
 }

@@ -124,10 +124,7 @@ extension CoreDataStack {
                 
                 
             }
-        }
-        
-        
-        
+        }    
     }
     
     func autoSave(delayInSeconds : Int){

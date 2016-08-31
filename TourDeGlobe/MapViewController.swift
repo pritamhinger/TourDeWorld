@@ -7,11 +7,18 @@
 //
 
 import UIKit
+import MapKit
 
 class MapViewController: UIViewController {
 
+    // MARK: - IBOutlets
+    @IBOutlet weak var mapView: MKMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapGestureReconizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.tap(_:)))
+        view.addGestureRecognizer(tapGestureReconizer)
     }
     
     
@@ -30,5 +37,18 @@ class MapViewController: UIViewController {
         }
     }
     
+    // MARK: - Tap Gesture Handlers
+    func tap(sender: UILongPressGestureRecognizer) {
+        if sender.state != UIGestureRecognizerState.Ended{
+            return
+        }
+        
+        let touchedLocation = sender.locationInView(mapView)
+        let locationCoordinate = mapView.convertPoint(touchedLocation, toCoordinateFromView: mapView)
+        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = locationCoordinate
+        mapView.addAnnotation(annotation)
+    }
 }
 

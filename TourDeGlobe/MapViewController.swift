@@ -8,14 +8,32 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MapViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
     
+    var fetchResultsController: NSFetchedResultsController?{
+        didSet{
+            fetchResultsController?.delegate = self
+            getLocations()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.delegate = self
+        mapView.showsUserLocation = false
+        mapView.zoomEnabled = true
+        
+        let coreDataStack = (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
+        let fetchRequest = NSFetchRequest(entityName: CoreDataStack.EntityName.Location)
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
+        fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.context, sectionNameKeyPath: nil, cacheName: nil)
         
         let tapGestureReconizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.tap(_:)))
         view.addGestureRecognizer(tapGestureReconizer)
@@ -49,6 +67,9 @@ class MapViewController: UIViewController {
         let annotation = MKPointAnnotation()
         annotation.coordinate = locationCoordinate
         mapView.addAnnotation(annotation)
+        
+        let location = Location(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude, context: fetchResultsController!.managedObjectContext)
+        print("Location added : \(location)")
     }
 }
 

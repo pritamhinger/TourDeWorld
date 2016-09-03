@@ -18,6 +18,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     var fetchResultsController: NSFetchedResultsController?{
         didSet{
             fetchResultsController?.delegate = self
+            getLocations()
         }
     }
     
@@ -38,8 +39,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
         fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.context, sectionNameKeyPath: nil, cacheName: nil)
-        
-        mapView.addAnnotations(getLocations())
         
         let tapGestureReconizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.tap(_:)))
         view.addGestureRecognizer(tapGestureReconizer)

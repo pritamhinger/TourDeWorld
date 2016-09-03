@@ -11,18 +11,15 @@ import CoreData
 import MapKit
 
 extension MapViewController: NSFetchedResultsControllerDelegate{
-    func getLocations() -> [MKPointAnnotation]{
+    func getLocations(){
         if let fc = fetchResultsController{
             do{
                 try fc.performFetch()
-                return readStoredLocation()
+                readStoredLocation()
             }catch let e as NSError{
                 print("Error while trying to perform a search: \n\(e)\n\(fetchResultsController)")
-                return [MKPointAnnotation]()
             }
         }
-        
-        return [MKPointAnnotation]()
     }
 }
 
@@ -50,7 +47,7 @@ extension MapViewController{
 }
 
 extension MapViewController{
-    func readStoredLocation() -> [MKPointAnnotation] {
+    func readStoredLocation() {
         if let fc = fetchResultsController{
             var totalLocations = 0;
             var totalSections = 0;
@@ -77,22 +74,13 @@ extension MapViewController{
                 sectionIndex = sectionIndex + 1
             }
             
-            var annotations = [MKPointAnnotation]()
-            //performUIUpdatesOnMainQueue{
-                var i = 1;
-                for location in locations{
-                    let coordinate = CLLocationCoordinate2DMake(Double(location.latitude!), Double(location.longitude!))
+            for location in locations{
+                let coordinate = CLLocationCoordinate2DMake(Double(location.latitude!), Double(location.longitude!))
                     
-                    let annotation = MKPointAnnotation()
-                    annotation.title = "Title No. \(i)"
-                    i = i + 1
-                    annotation.coordinate = coordinate
-                    annotations.append(annotation)
-                }
-                //}
-            return annotations
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                self.mapView.addAnnotation(annotation)
+            }
         }
-        
-        return [MKPointAnnotation]()
     }
 }

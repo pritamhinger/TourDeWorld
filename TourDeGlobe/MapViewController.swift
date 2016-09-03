@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate {
 
     // MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -18,8 +18,12 @@ class MapViewController: UIViewController {
     var fetchResultsController: NSFetchedResultsController?{
         didSet{
             fetchResultsController?.delegate = self
-            getLocations()
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        print("reloading pins")
     }
     
     override func viewDidLoad() {
@@ -34,6 +38,8 @@ class MapViewController: UIViewController {
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: false)]
         fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.context, sectionNameKeyPath: nil, cacheName: nil)
+        
+        mapView.addAnnotations(getLocations())
         
         let tapGestureReconizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.tap(_:)))
         view.addGestureRecognizer(tapGestureReconizer)

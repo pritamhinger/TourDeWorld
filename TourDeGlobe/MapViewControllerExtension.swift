@@ -11,20 +11,24 @@ import CoreData
 import MapKit
 
 extension MapViewController: NSFetchedResultsControllerDelegate{
-    func getLocations(){
+    func getLocations() -> [MKPointAnnotation]{
         if let fc = fetchResultsController{
             do{
                 try fc.performFetch()
-                addLocations()
+                return readStoredLocation()
             }catch let e as NSError{
                 print("Error while trying to perform a search: \n\(e)\n\(fetchResultsController)")
+                return [MKPointAnnotation]()
             }
         }
+        
+        return [MKPointAnnotation]()
     }
 }
 
-extension MapViewController: MKMapViewDelegate{
+extension MapViewController{
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        print("Adding annotation. Coordinate is: \(annotation.coordinate)")
         if annotation is MKUserLocation{
             return nil
         }
@@ -46,7 +50,7 @@ extension MapViewController: MKMapViewDelegate{
 }
 
 extension MapViewController{
-    func addLocations() {
+    func readStoredLocation() -> [MKPointAnnotation] {
         if let fc = fetchResultsController{
             var totalLocations = 0;
             var totalSections = 0;
@@ -73,16 +77,22 @@ extension MapViewController{
                 sectionIndex = sectionIndex + 1
             }
             
-            performUIUpdatesOnMainQueue{
+            var annotations = [MKPointAnnotation]()
+            //performUIUpdatesOnMainQueue{
+                var i = 1;
                 for location in locations{
-                    let coordinate = CLLocationCoordinate2DMake(Double(location.latitude!), Double(location.latitude!))
-                    print("Coordinate : \(coordinate)")
+                    let coordinate = CLLocationCoordinate2DMake(Double(location.latitude!), Double(location.longitude!))
+                    
                     let annotation = MKPointAnnotation()
+                    annotation.title = "Title No. \(i)"
+                    i = i + 1
                     annotation.coordinate = coordinate
-                    self.mapView.addAnnotation(annotation)
+                    annotations.append(annotation)
                 }
-            }
-            
+                //}
+            return annotations
         }
+        
+        return [MKPointAnnotation]()
     }
 }

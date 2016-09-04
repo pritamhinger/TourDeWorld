@@ -46,7 +46,10 @@ extension MapViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         mapView.deselectAnnotation(view.annotation, animated: true)
-        self.performSegueWithIdentifier(AppConstants.SegueIdentifier.ViewImageForLocationSegue, sender: view)
+        let destinationController = self.storyboard?.instantiateViewControllerWithIdentifier("ImageViewControllerId") as! ImageViewController
+        destinationController.location = annotationMap[view.annotation as! MKPointAnnotation]
+        self.navigationController?.pushViewController(destinationController, animated: true)
+        //self.performSegueWithIdentifier(AppConstants.SegueIdentifier.ViewImageForLocationSegue, sender: view)
     }
 }
 
@@ -59,9 +62,6 @@ extension MapViewController{
                 totalLocations =  totalLocations + sec.numberOfObjects
                 totalSections = totalSections + 1
             }
-            
-            print("total locations are : \(totalLocations)")
-            print("total sections are : \(totalSections)")
             
             var sectionIndex = 0
             var locations = [Location]();
@@ -84,6 +84,7 @@ extension MapViewController{
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
                 annotationMap[annotation] = location
+                
                 self.mapView.addAnnotation(annotation)
             }
         }

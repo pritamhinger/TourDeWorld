@@ -17,6 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if CoreDataStack.Constants.DropData {
+            do{
+                try coreDataStack.dropAllData()
+            }catch{
+                print("Error droping all objects in DB")
+            }
+        }
+        
         coreDataStack.autoSave(CoreDataStack.Constants.DelaysInSeconds)
         return true
     }

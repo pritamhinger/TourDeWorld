@@ -12,7 +12,7 @@ import CoreData
 
 class Image: NSManagedObject {
 
-    convenience init(imageURL: String?, width: NSNumber?, height: NSNumber?, flickrId:String, title:String?, owner:String?, secret:String?, farm:NSNumber?, context: NSManagedObjectContext){
+    convenience init(imageURL: String?, width: NSNumber?, height: NSNumber?, flickrId:String, title:String?, owner:String?, secret:String?, farm:NSNumber?, location:Location, context: NSManagedObjectContext){
         if let entity = NSEntityDescription.entityForName(CoreDataStack.EntityName.Image, inManagedObjectContext: context){
             self.init(entity: entity, insertIntoManagedObjectContext: context)
             self.farm = farm
@@ -23,13 +23,14 @@ class Image: NSManagedObject {
             self.secret = secret
             self.title = title
             self.width = width
+            self.location = location
         }
         else{
             fatalError("Unable to find entity \(CoreDataStack.EntityName.Image)")
         }
     }
     
-    class func parseImageJSON(jsonReponse: [[String:AnyObject]], context:NSManagedObjectContext) -> [Image]{
+    class func parseImageJSON(jsonReponse: [[String:AnyObject]], location:Location, context:NSManagedObjectContext) -> [Image]{
         var images = [Image]()
         
         for currentImageJSON in jsonReponse {
@@ -43,7 +44,7 @@ class Image: NSManagedObject {
             let owner = currentImageJSON[FlickrClient.FlickResponseKeys.ImageOwner] as! String
             let secret = currentImageJSON[FlickrClient.FlickResponseKeys.Secret] as! String
             let farm = NSNumber(int: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageWidth] as! NSString).intValue)
-            let currentImage: Image? = Image(imageURL: imageURL, width: width, height: height, flickrId: flickrId, title: title, owner: owner, secret: secret, farm: farm, context: context)
+            let currentImage: Image? = Image(imageURL: imageURL, width: width, height: height, flickrId: flickrId, title: title, owner: owner, secret: secret, farm: farm, location: location, context: context)
             if let currentImage = currentImage{
                 images.append(currentImage)
             }   

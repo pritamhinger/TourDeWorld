@@ -24,7 +24,6 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(AppConstants.CellIdentifier.FlickrImageViewCell , forIndexPath: indexPath) as! FlickrImageCollectionViewCell
         
         let image = imageDataSource?[indexPath.row]
-        print("Image URL is : \(image?.imageURL)")
         
         let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
         activityIndicatorView.center = CGPointMake(cell.contentView.frame.size.width/2, cell.contentView.frame.size.height/2)
@@ -53,18 +52,15 @@ extension ImageViewController{
         queryParameters[FlickrClient.QueryParameterKeys.Longitude] = "\(location.longitude!)"
         FlickrClient.sharedInstance().getPhotos(FlickrClient.APIMethod.PhotosSearch, parameters: queryParameters){ (results, error) in
             if error == nil{
-                print(results)
-                
                 if let results = results{
                     if let photosJSON = results[FlickrClient.FlickResponseKeys.Photos] as? [String:AnyObject]{
                         
                         if let photoJSONArray = photosJSON[FlickrClient.FlickResponseKeys.Photo] as? [[String:AnyObject]]{
                             let coreDataStack = (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
                             coreDataStack.performBackgroundBatchOperation({(workerContext) in
-                                let images = Image.parseImageJSON(photoJSONArray, context: workerContext)
-                                print("Image Count is \(images.count)")
+                                let images = Image.parseImageJSON(photoJSONArray, location: location, context: workerContext.parentContext!)
+                                location.images = NSSet(array: images)
                                 performUIUpdatesOnMainQueue{
-                                    print("Reloading colleciton view")
                                     self.imageDataSource = images
                                     self.collectionView.reloadData()
                                 }
@@ -78,5 +74,28 @@ extension ImageViewController{
                 print(error)
             }
         }
+    }
+}
+
+extension ImageViewController{
+    func screenRotated(notification:NSNotification) {
+        
+        var factor = 3.0
+        if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation))
+        {
+            print("landscape")
+            factor = 5.0
+        }
+        else if(UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation))
+        {
+            print("Portrait")
+            factor = 3.0
+        }
+        
+        let itemSpace = CGFloat(factor)
+        let dimension = (collectionView.frame.size.width - (2 * itemSpace))/CGFloat(factor)
+        flowLayout.minimumInteritemSpacing = itemSpace
+        flowLayout.minimumLineSpacing = itemSpace
+        flowLayout.itemSize = CGSizeMake(dimension, dimension)
     }
 }

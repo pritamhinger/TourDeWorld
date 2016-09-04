@@ -16,6 +16,7 @@ class ImageViewController: UIViewController {
     
     @IBOutlet weak var tappedPinMapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,8 +31,40 @@ class ImageViewController: UIViewController {
             annotation.coordinate = coordinate
             tappedPinMapView.addAnnotation(annotation)
             tappedPinMapView.setRegion(region, animated: true)
+            tappedPinMapView.scrollEnabled = false
+            tappedPinMapView.zoomEnabled = false
             
-            fetchImagesFromFlickerForLocation(location)
+            if let images = location.images{
+                if images.count > 0{
+                    imageDataSource = images.allObjects as? [Image]
+                    //collectionView.reloadData()
+                }
+                else{
+                    fetchImagesFromFlickerForLocation(location)
+                }
+            }
+            else{
+                fetchImagesFromFlickerForLocation(location)
+            }
+            
+            let itemSpace = CGFloat(5.0)
+            let dimension = (view.frame.size.width - (2 * itemSpace))/3.0
+            
+            flowLayout.minimumInteritemSpacing = itemSpace
+            flowLayout.minimumLineSpacing = itemSpace
+            flowLayout.itemSize = CGSizeMake(dimension, dimension)
+            
+            self.navigationItem.title = "Flickr Images"
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ImageViewController.screenRotated(_:)), name: UIDeviceOrientationDidChangeNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIDeviceOrientationDidChangeNotification, object: nil)
     }
 }

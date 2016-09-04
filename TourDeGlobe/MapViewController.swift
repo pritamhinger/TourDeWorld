@@ -24,11 +24,6 @@ class MapViewController: UIViewController {
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        print("reloading pins")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,22 +39,7 @@ class MapViewController: UIViewController {
         
         let tapGestureReconizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.tap(_:)))
         view.addGestureRecognizer(tapGestureReconizer)
-    }
-    
-    
-    @IBAction func testButton(sender: AnyObject) {
-        var queryParameters = [String:String]()
-        queryParameters = FlickrClient.addQueryParametersFromPreference(queryParameters)
-        queryParameters[FlickrClient.QueryParameterKeys.Latitude] = "\(25.92)"
-        queryParameters[FlickrClient.QueryParameterKeys.Longitude] = "\(74.26)"
-        FlickrClient.sharedInstance().getPhotos(FlickrClient.APIMethod.PhotosSearch, parameters: queryParameters){ (results, error) in
-            if error == nil{
-                print(results)
-            }
-            else{
-                print(error)
-            }
-        }
+        self.navigationController?.title = "Map View"
     }
     
     // MARK: - Tap Gesture Handlers
@@ -77,15 +57,9 @@ class MapViewController: UIViewController {
         
         let location = Location(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude, context: fetchResultsController!.managedObjectContext)
         annotationMap[annotation] = location
-        print("Location added : \(location)")
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == AppConstants.SegueIdentifier.ViewImageForLocationSegue{
-            let destinationController = segue.destinationViewController as! ImageViewController
-            print(sender)
-            destinationController.location = annotationMap[(sender as! MKAnnotationView).annotation as! MKPointAnnotation]
-        }
     }
 }
 

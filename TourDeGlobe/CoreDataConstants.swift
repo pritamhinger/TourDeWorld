@@ -20,6 +20,7 @@ extension CoreDataStack{
     }
     
     struct Constants {
-        static let DelaysInSeconds = 60
+        static let DelaysInSeconds = 5
+        static let DropData = false
     }
 }

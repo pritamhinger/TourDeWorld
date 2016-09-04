@@ -10,7 +10,7 @@ import Foundation
 
 struct AppConstants {
     struct SegueIdentifier {
-        static let ViewImageForLocationSegue = "viewImageForLocationSegue" 
+        //static let ViewImageForLocationSegue = "viewImageForLocationSegue"
     }
     
     struct CellIdentifier {

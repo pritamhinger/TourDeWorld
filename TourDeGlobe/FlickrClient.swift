@@ -55,6 +55,36 @@ class FlickrClient: NSObject {
         return task
     }
     
+    func taskToFetchImage(url: String, completionHandler: (result: AnyObject!, error:NSError?) -> Void) -> NSURLSessionDataTask{
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        let task = session.dataTaskWithRequest(request) { (data, response, error) in
+            func sendError(errorString: String) {
+                let userInfo = [NSLocalizedDescriptionKey : errorString]
+                completionHandler(result: nil, error: NSError(domain: (error?.domain)!, code: (error?.code)!, userInfo: userInfo))
+            }
+            
+            guard (error == nil) else {
+                sendError((error?.localizedDescription)!)
+                return
+            }
+            
+            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                sendError("Your request returned a status code other than 2xx!")
+                return
+            }
+            
+            guard let data = data else {
+                sendError("No data was returned by the request!")
+                return
+            }
+            
+            completionHandler(result: data, error: nil)
+        }
+        
+        task.resume()
+        return task
+    }
+    
     // MARK: - Private Methods
     private func convertDataWithCompletionHandler(data: NSData, completionHandlerForConvertData: (result: AnyObject!, error: NSError?) -> Void) {
         

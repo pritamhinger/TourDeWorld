@@ -50,4 +50,20 @@ extension FlickrClient{
         static let RadiusUnit = "km"
     }
     
+    struct  FlickResponseKeys {
+        static let ImageURL = "url_m"
+        static let ImageId = "id"
+        static let ImageOwner = "owner"
+        static let Secret = "secret"
+        static let Farm = "farm"
+        static let Title = "title"
+        static let ImageHeight = "height_m"
+        static let ImageWidth = "width_m"
+        static let CurrentPageNumber = "page"
+        static let TotalPages = "pages"
+        static let PerPageCount = "perpage"
+        static let TotalCount = "total"
+        static let Photos = "photos"
+        static let Photo = "photo"
+    }
 }

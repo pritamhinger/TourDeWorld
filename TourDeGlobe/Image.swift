@@ -28,4 +28,27 @@ class Image: NSManagedObject {
             fatalError("Unable to find entity \(CoreDataStack.EntityName.Image)")
         }
     }
+    
+    class func parseImageJSON(jsonReponse: [[String:AnyObject]], context:NSManagedObjectContext) -> [Image]{
+        var images = [Image]()
+        
+        for currentImageJSON in jsonReponse {
+            let imageURL = currentImageJSON[FlickrClient.FlickResponseKeys.ImageURL] as! String
+            //let width = NSNumber(int: currentImageJSON[FlickrClient.FlickResponseKeys.ImageWidth] as! Int32)
+            //let height = NSNumber(int: currentImageJSON[FlickrClient.FlickResponseKeys.ImageHeight] as! Int32)
+            let width = NSNumber(double: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageWidth] as! NSString).doubleValue)
+            let height = NSNumber(double: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageHeight] as! NSString).doubleValue)
+            let flickrId = currentImageJSON[FlickrClient.FlickResponseKeys.ImageId] as! String
+            let title = currentImageJSON[FlickrClient.FlickResponseKeys.Title] as! String
+            let owner = currentImageJSON[FlickrClient.FlickResponseKeys.ImageOwner] as! String
+            let secret = currentImageJSON[FlickrClient.FlickResponseKeys.Secret] as! String
+            let farm = NSNumber(int: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageWidth] as! NSString).intValue)
+            let currentImage: Image? = Image(imageURL: imageURL, width: width, height: height, flickrId: flickrId, title: title, owner: owner, secret: secret, farm: farm, context: context)
+            if let currentImage = currentImage{
+                images.append(currentImage)
+            }   
+        }
+        
+        return images
+    }
 }

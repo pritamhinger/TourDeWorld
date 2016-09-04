@@ -12,4 +12,12 @@ struct AppConstants {
     struct SegueIdentifier {
         static let ViewImageForLocationSegue = "viewImageForLocationSegue" 
     }
+    
+    struct CellIdentifier {
+        static let FlickrImageViewCell = "flickrImageViewCell"
+    }
+    
+    static let DetailViewMapLatitudeZoomLevel = 50.0
+    static let DetailViewMapLongitudeZoomLevel = 50.0
+    
 }

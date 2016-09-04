@@ -83,7 +83,6 @@ extension MapViewController{
                     
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
-                annotation.title = "Sample title"
                 annotationMap[annotation] = location
                 self.mapView.addAnnotation(annotation)
             }

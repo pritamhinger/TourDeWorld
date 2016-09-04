@@ -7,13 +7,13 @@
 //
 
 import Foundation
+import UIKit
 
 extension FlickrClient{
     
     // MARK: - Flickr Helper Methods
     // Below method is used to get photos based on the Parameters passed
     func getPhotos(methodName:String, parameters: [String:String], completionHandler: (results:AnyObject?, error:NSError?) -> Void) {
-        //let queryParameters = FlickrClient.addQueryParametersFromPreference(parameters)
         FlickrClient.sharedInstance().taskForGetMethod(methodName, parameter: parameters){ (results, error) in
             if error == nil{
                 completionHandler(results: results, error: nil)
@@ -23,6 +23,18 @@ extension FlickrClient{
             }
         }
         
+    }
+    
+    func getImageFromURL(url: String, completionHandler: (image:UIImage?, error: NSError?) -> Void) {
+        FlickrClient.sharedInstance().taskToFetchImage(url){(result, error) in
+            if error == nil{
+                let image = UIImage(data: result as! NSData)
+                completionHandler(image: image, error: nil)
+            }
+            else{
+                completionHandler(image: nil, error: error)
+            }
+        }
     }
     
     // MARK: - Class Methods

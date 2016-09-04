@@ -23,9 +23,8 @@ extension MapViewController: NSFetchedResultsControllerDelegate{
     }
 }
 
-extension MapViewController{
+extension MapViewController: MKMapViewDelegate {
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        print("Adding annotation. Coordinate is: \(annotation.coordinate)")
         if annotation is MKUserLocation{
             return nil
         }
@@ -34,7 +33,7 @@ extension MapViewController{
         var pin = mapView.dequeueReusableAnnotationViewWithIdentifier(reusePin) as? MKPinAnnotationView
         if pin == nil{
             pin = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reusePin)
-            pin?.canShowCallout = true
+            pin?.canShowCallout = false
             pin?.animatesDrop = true
             pin?.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
         }
@@ -43,6 +42,11 @@ extension MapViewController{
         }
         
         return pin
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        mapView.deselectAnnotation(view.annotation, animated: true)
+        self.performSegueWithIdentifier(AppConstants.SegueIdentifier.ViewImageForLocationSegue, sender: view)
     }
 }
 
@@ -79,6 +83,8 @@ extension MapViewController{
                     
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
+                annotation.title = "Sample title"
+                annotationMap[annotation] = location
                 self.mapView.addAnnotation(annotation)
             }
         }

@@ -10,10 +10,12 @@ import UIKit
 import MapKit
 import CoreData
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
+    
+    var annotationMap = [MKPointAnnotation: Location]()
     
     var fetchResultsController: NSFetchedResultsController?{
         didSet{
@@ -74,7 +76,16 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.addAnnotation(annotation)
         
         let location = Location(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude, context: fetchResultsController!.managedObjectContext)
+        annotationMap[annotation] = location
         print("Location added : \(location)")
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == AppConstants.SegueIdentifier.ViewImageForLocationSegue{
+            let destinationController = segue.destinationViewController as! ImageViewController
+            print(sender)
+            destinationController.location = annotationMap[(sender as! MKAnnotationView).annotation as! MKPointAnnotation]
+        }
     }
 }
 

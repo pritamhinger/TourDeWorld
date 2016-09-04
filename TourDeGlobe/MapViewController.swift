@@ -57,6 +57,7 @@ class MapViewController: UIViewController {
         
         let location = Location(latitude: locationCoordinate.latitude, longitude: locationCoordinate.longitude, context: fetchResultsController!.managedObjectContext)
         annotationMap[annotation] = location
+        (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack.save()
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

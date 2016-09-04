@@ -47,12 +47,7 @@ class ImageViewController: UIViewController {
                 fetchImagesFromFlickerForLocation(location)
             }
             
-            let itemSpace = CGFloat(5.0)
-            let dimension = (view.frame.size.width - (2 * itemSpace))/3.0
-            
-            flowLayout.minimumInteritemSpacing = itemSpace
-            flowLayout.minimumLineSpacing = itemSpace
-            flowLayout.itemSize = CGSizeMake(dimension, dimension)
+            reCalculateDimension()
             
             self.navigationItem.title = "Flickr Images"
         }

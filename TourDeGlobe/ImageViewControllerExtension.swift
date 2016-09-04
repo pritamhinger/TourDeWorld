@@ -86,7 +86,10 @@ extension ImageViewController{
 
 extension ImageViewController{
     func screenRotated(notification:NSNotification) {
-        
+        reCalculateDimension()
+    }
+    
+    func reCalculateDimension() {
         var factor = 3.0
         if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation))
         {

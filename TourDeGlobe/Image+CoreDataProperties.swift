@@ -17,12 +17,12 @@ extension Image {
     @NSManaged var farm: NSNumber?
     @NSManaged var flickrId: String?
     @NSManaged var height: NSNumber?
+    @NSManaged var imageData: NSData?
     @NSManaged var imageURL: String?
     @NSManaged var owner: String?
     @NSManaged var secret: String?
     @NSManaged var title: String?
     @NSManaged var width: NSNumber?
-    @NSManaged var imageData: NSData?
     @NSManaged var location: Location?
 
 }

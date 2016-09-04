@@ -25,14 +25,19 @@ extension FlickrClient{
         
     }
     
-    func getImageFromURL(url: String, completionHandler: (image:UIImage?, error: NSError?) -> Void) {
+    func getImageDataFromURL(url: String, completionHandler: (imageData:NSData?, error: NSError?) -> Void) {
         FlickrClient.sharedInstance().taskToFetchImage(url){(result, error) in
             if error == nil{
-                let image = UIImage(data: result as! NSData)
-                completionHandler(image: image, error: nil)
+                if let data = result as? NSData{
+                    completionHandler(imageData: data, error: nil)
+                }
+                else{
+                    completionHandler(imageData: nil, error: NSError(domain: "DataFormatError", code: 1, userInfo: nil))
+                }
+                
             }
             else{
-                completionHandler(image: nil, error: error)
+                completionHandler(imageData: nil, error: error)
             }
         }
     }

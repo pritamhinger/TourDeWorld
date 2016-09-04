@@ -25,19 +25,26 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
         let image = imageDataSource?[indexPath.row]
         
-        let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-        activityIndicatorView.center = CGPointMake(cell.contentView.frame.size.width/2, cell.contentView.frame.size.height/2)
-        cell.contentView.addSubview(activityIndicatorView)
-        activityIndicatorView.startAnimating()
-        
-        FlickrClient.sharedInstance().getImageFromURL((image?.imageURL)!){ (image, error) in
-            performUIUpdatesOnMainQueue{
-                if error == nil{
-                    cell.flickrImageView.image = image
+        if image?.imageData == nil{
+            let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+            activityIndicatorView.center = CGPointMake(cell.contentView.frame.size.width/2, cell.contentView.frame.size.height/2)
+            cell.contentView.addSubview(activityIndicatorView)
+            activityIndicatorView.startAnimating()
+            
+            FlickrClient.sharedInstance().getImageDataFromURL((image?.imageURL)!){ (data, error) in
+                performUIUpdatesOnMainQueue{
+                    if error == nil{
+                        cell.flickrImageView.image = UIImage(data: data!)
+                        image?.imageData = data
+                    }
+                    
+                    activityIndicatorView.stopAnimating()
                 }
-                
-                activityIndicatorView.stopAnimating()
             }
+        }
+        else{
+            print("Didn't made network request")
+            cell.flickrImageView.image = UIImage(data: (image?.imageData)!)
         }
         
         return cell

@@ -22,6 +22,7 @@ extension Image {
     @NSManaged var secret: String?
     @NSManaged var title: String?
     @NSManaged var width: NSNumber?
+    @NSManaged var imageData: NSData?
     @NSManaged var location: Location?
 
 }

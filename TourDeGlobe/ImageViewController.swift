@@ -79,7 +79,13 @@ class ImageViewController: UIViewController {
             
             imageDataSource = images as? [Image]
             coreDataStack.save()
-            collectionView.reloadData()
+            if imageDataSource?.count > 0 {
+                collectionView.reloadData()
+            }
+            else{
+                fetchImagesFromFlickerForLocation(location!)
+            }
+            
         }
         else{
             for image in images!{

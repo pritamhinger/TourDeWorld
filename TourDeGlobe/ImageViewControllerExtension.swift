@@ -25,6 +25,8 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
         
         let image = imageDataSource?[indexPath.row]
         
+        cell.flickrImageView.image = UIImage(named: "placeholder")
+        
         if image?.imageData == nil{
             let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
             activityIndicatorView.center = CGPointMake(cell.contentView.frame.size.width/2, cell.contentView.frame.size.height/2)
@@ -46,6 +48,9 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
             print("Didn't made network request")
             cell.flickrImageView.image = UIImage(data: (image?.imageData)!)
         }
+        
+        print("Cell width : \(cell.frame.size.width)")
+        print("cell height : \(cell.frame.size.height)")
         
         return cell
     }
@@ -86,26 +91,42 @@ extension ImageViewController{
 
 extension ImageViewController{
     func screenRotated(notification:NSNotification) {
-        reCalculateDimension()
+        reCalculateDimension(false)
     }
     
-    func reCalculateDimension() {
+    func reCalculateDimension(isLoad:Bool) {
+        if isLoad {
+            print("Called from View Did Load")
+        }
+        
         var factor = 3.0
+        var width = view.frame.size.width
         if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation))
         {
             print("landscape")
-            factor = 5.0
+            factor = 3.0
+            width = collectionView.frame.size.width
         }
         else if(UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation))
         {
             print("Portrait")
             factor = 3.0
+            width = view.frame.size.width
         }
         
         let itemSpace = CGFloat(factor)
-        let dimension = (collectionView.frame.size.width - (2 * itemSpace))/CGFloat(factor)
+        let dimension = (width - (2 * itemSpace))/CGFloat(factor)
         flowLayout.minimumInteritemSpacing = itemSpace
         flowLayout.minimumLineSpacing = itemSpace
         flowLayout.itemSize = CGSizeMake(dimension, dimension)
+        
+        if isLoad{
+            print("Factor \(factor)")
+            print("itemSpace \(itemSpace)")
+            print("Dimension \(dimension)")
+            print("width \(collectionView.frame.size.width)")
+            print("height \(collectionView.frame.size.height)")
+            flowLayout.invalidateLayout()
+        }
     }
 }

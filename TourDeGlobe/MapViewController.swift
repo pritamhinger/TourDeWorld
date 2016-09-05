@@ -42,6 +42,25 @@ class MapViewController: UIViewController {
         self.navigationController?.title = "Map View"
     }
     
+    
+    
+    @IBAction func editingSwitched(sender: UIBarButtonItem) {
+        
+        if sender.tag == 1{
+            sender.tag = 2
+            sender.title = "Done"
+            sender.style = .Done
+            displayNotificationBanner(withTag: 10, visibility: true)
+        }
+        else{
+            sender.tag = 1
+            sender.title = "Edit"
+            sender.style = .Plain
+            displayNotificationBanner(withTag: 10, visibility: false)
+        }
+        
+    }
+    
     // MARK: - Tap Gesture Handlers
     func tap(sender: UILongPressGestureRecognizer) {
         if sender.state != UIGestureRecognizerState.Ended{

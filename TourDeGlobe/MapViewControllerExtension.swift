@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 import MapKit
+import UIKit
 
 extension MapViewController: NSFetchedResultsControllerDelegate{
     func getLocations(){
@@ -87,6 +88,51 @@ extension MapViewController{
                 
                 self.mapView.addAnnotation(annotation)
             }
+        }
+    }
+    
+    func displayNotificationBanner(withTag tag:Int, visibility isVisible:Bool) -> Void {
+        if !isVisible {
+            view.viewWithTag(tag)?.removeFromSuperview()
+        }
+        else{
+            let viewFrame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y + view.frame.height - CGFloat(64), width: view.frame.width, height: CGFloat(64))
+            print(viewFrame)
+            let bannerView = UIView(frame: viewFrame)
+            bannerView.backgroundColor = UIColor.redColor()
+            bannerView.tag = tag
+            
+            bannerView.translatesAutoresizingMaskIntoConstraints = false
+            
+            view.addSubview(bannerView)
+            
+            let leading = NSLayoutConstraint(item: bannerView, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: 0)
+            let trailing = NSLayoutConstraint(item: bannerView, attribute: .Trailing, relatedBy: .Equal, toItem: view, attribute: .Trailing, multiplier: 1, constant: 0)
+            let bottom = NSLayoutConstraint(item: bannerView, attribute: .Bottom, relatedBy: .Equal, toItem: view, attribute: .Bottom, multiplier: 1, constant: 0)
+            let heightBannerView = NSLayoutConstraint(item: bannerView, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: CGFloat(64))
+            view.addConstraint(leading)
+            view.addConstraint(trailing)
+            view.addConstraint(bottom)
+            view.addConstraint(heightBannerView)
+            
+            let labelFrame = CGRect(x: bannerView.frame.origin.x, y: bannerView.frame.origin.y, width: bannerView.frame.size.width, height: bannerView.frame.size.height)
+            let bannerAlertMessage = UILabel(frame: labelFrame)
+            bannerAlertMessage.text = "Tap Pin to Delete"
+            bannerAlertMessage.textColor = UIColor.whiteColor()
+            bannerAlertMessage.textAlignment = NSTextAlignment.Center;
+            let font:UIFont = UIFont(name: "AvenirNext-MediumItalic", size: 20)!
+            bannerAlertMessage.font = font;
+            bannerAlertMessage.sizeToFit();
+            bannerAlertMessage.translatesAutoresizingMaskIntoConstraints = false;
+            
+            let alertMessageLeadingConstraint = NSLayoutConstraint(item: bannerAlertMessage, attribute: .Leading, relatedBy: .Equal, toItem: bannerView, attribute: .Leading, multiplier: 1, constant: 0)
+            let alertMessageTrailiingConstraint = NSLayoutConstraint(item: bannerAlertMessage, attribute: .Trailing, relatedBy: .Equal, toItem: bannerView, attribute: .Trailing, multiplier: 1, constant: 0)
+            let alertMessageCenterYConstraint = NSLayoutConstraint(item: bannerAlertMessage, attribute: .CenterY, relatedBy: .Equal, toItem: bannerView, attribute: .CenterY, multiplier: 1, constant: 0)
+            
+            bannerView.addSubview(bannerAlertMessage)
+            bannerView.addConstraint(alertMessageLeadingConstraint)
+            bannerView.addConstraint(alertMessageTrailiingConstraint)
+            bannerView.addConstraint(alertMessageCenterYConstraint)
         }
     }
 }

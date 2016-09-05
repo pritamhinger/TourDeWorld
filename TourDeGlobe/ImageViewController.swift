@@ -21,6 +21,8 @@ class ImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        reCalculateDimension(true)
+        
         if let location = location{
             var region = self.tappedPinMapView.region
             let coordinate = CLLocationCoordinate2DMake(Double(location.latitude!), Double(location.longitude!))
@@ -46,8 +48,6 @@ class ImageViewController: UIViewController {
             else{
                 fetchImagesFromFlickerForLocation(location)
             }
-            
-            reCalculateDimension()
             
             self.navigationItem.title = "Flickr Images"
         }

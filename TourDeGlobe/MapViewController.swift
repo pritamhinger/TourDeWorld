@@ -39,7 +39,6 @@ class MapViewController: UIViewController, UIPopoverPresentationControllerDelega
         fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.context, sectionNameKeyPath: nil, cacheName: nil)
         
         let tapGestureReconizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.tap(_:)))
-        tapGestureReconizer.minimumPressDuration = 2
         view.addGestureRecognizer(tapGestureReconizer)
         self.navigationItem.title = "Tour De Globe"
     }

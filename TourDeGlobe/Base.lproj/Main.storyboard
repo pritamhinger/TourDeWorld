@@ -224,6 +224,7 @@
                             <constraint firstItem="VcV-J7-Hn9" firstAttribute="leading" secondItem="kJd-yC-HoD" secondAttribute="leading" id="uQx-py-A8d"/>
                         </constraints>
                     </view>
+                    <value key="contentSizeForViewInPopover" type="size" width="200" height="220"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="200" height="220"/>

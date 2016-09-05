@@ -45,16 +45,19 @@ extension FlickrClient{
         static let MediumURL = "url_m"
     }
     
+    // MARK: - Default Values of API Parameters
     struct Default {
         static let Radius = "5"
         static let RadiusUnit = "km"
     }
     
+    // MARK: - Radius Units
     struct RadiusUnit {
         static let Kms = Default.RadiusUnit
         static let Miles = "mi"
     }
     
+    // MARK: - Keys in Flickr Response 
     struct  FlickResponseKeys {
         static let ImageURL = "url_m"
         static let ImageId = "id"

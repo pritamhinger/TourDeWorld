@@ -14,6 +14,7 @@ import CoreData
 
 extension Image {
 
+    // MARK: - Properties
     @NSManaged var farm: NSNumber?
     @NSManaged var flickrId: String?
     @NSManaged var height: NSNumber?

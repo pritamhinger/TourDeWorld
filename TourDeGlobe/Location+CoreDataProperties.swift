@@ -14,6 +14,7 @@ import CoreData
 
 extension Location {
 
+    // MARK: - Properties
     @NSManaged var creationDate: NSDate?
     @NSManaged var latitude: NSNumber?
     @NSManaged var longitude: NSNumber?

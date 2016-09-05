@@ -12,6 +12,7 @@ import CoreData
 
 class Location: NSManagedObject {
     
+    // MARK: - Initiazer
     convenience init(latitude:Double, longitude:Double, context: NSManagedObjectContext) {
         if let entity = NSEntityDescription.entityForName(CoreDataStack.EntityName.Location, inManagedObjectContext: context){
             self.init(entity: entity, insertIntoManagedObjectContext: context)

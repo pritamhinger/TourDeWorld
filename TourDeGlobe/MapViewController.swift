@@ -16,6 +16,7 @@ class MapViewController: UIViewController {
     @IBOutlet weak var mapView: MKMapView!
     
     var annotationMap = [MKPointAnnotation: Location]()
+    var isDeleteModeOn = false
     
     var fetchResultsController: NSFetchedResultsController?{
         didSet{
@@ -38,6 +39,7 @@ class MapViewController: UIViewController {
         fetchResultsController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: coreDataStack.context, sectionNameKeyPath: nil, cacheName: nil)
         
         let tapGestureReconizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.tap(_:)))
+        tapGestureReconizer.minimumPressDuration = 2
         view.addGestureRecognizer(tapGestureReconizer)
         self.navigationController?.title = "Map View"
     }
@@ -51,11 +53,13 @@ class MapViewController: UIViewController {
             sender.title = "Done"
             sender.style = .Done
             displayNotificationBanner(withTag: 10, visibility: true)
+            isDeleteModeOn = true
         }
         else{
             sender.tag = 1
             sender.title = "Edit"
             sender.style = .Plain
+            isDeleteModeOn = false
             displayNotificationBanner(withTag: 10, visibility: false)
         }
         

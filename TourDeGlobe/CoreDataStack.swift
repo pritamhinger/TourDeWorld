@@ -94,7 +94,7 @@ extension CoreDataStack{
             do{
                 try self.backgroundContext.save()
             }catch{
-                fatalError("Error while saving backgroundContext: \(error)")
+                print("Error while saving backgroundContext: \(error)")
             }
         }
     }
@@ -110,7 +110,7 @@ extension CoreDataStack {
                 do{
                     try self.context.save()
                 }catch{
-                    fatalError("Error while saving main context: \(error)")
+                    print("Error while saving main context: \(error)")
                 }
                 
                 // now we save in the background
@@ -118,7 +118,7 @@ extension CoreDataStack {
                     do{
                         try self.persistingContext.save()
                     }catch{
-                        fatalError("Error while saving persisting context: \(error)")
+                        print("Error while saving persisting context: \(error)")
                     }
                 }
                 

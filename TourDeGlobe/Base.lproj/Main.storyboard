@@ -34,6 +34,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="9gA-ti-5Tv">
+                        <barButtonItem key="leftBarButtonItem" title="Preferences" id="M1z-I7-A0m">
+                            <connections>
+                                <segue destination="fGU-U1-uPa" kind="popoverPresentation" identifier="preferenceSegue" popoverAnchorBarButtonItem="M1z-I7-A0m" id="Amk-HB-1wd">
+                                    <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                </segue>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" tag="1" title="Edit" id="g0J-WU-DBC">
                             <connections>
                                 <action selector="editingSwitched:" destination="BYZ-38-t0r" id="qe1-74-PPs"/>
@@ -141,7 +148,92 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iFk-BG-sKm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1913" y="233"/>
+            <point key="canvasLocation" x="1927" y="545"/>
+        </scene>
+        <!--Preference View Controller-->
+        <scene sceneID="Pzf-Gu-x6K">
+            <objects>
+                <viewController id="fGU-U1-uPa" customClass="PreferenceViewController" customModule="TourDeGlobe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="doJ-rz-cW9"/>
+                        <viewControllerLayoutGuide type="bottom" id="0o5-z8-OGs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GvH-Qy-hNE">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="220"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mdy-Oz-znO">
+                                <rect key="frame" x="16" y="49" width="168" height="29"/>
+                                <segments>
+                                    <segment title="Kms"/>
+                                    <segment title="Miles"/>
+                                </segments>
+                                <connections>
+                                    <action selector="unitChanged:" destination="fGU-U1-uPa" eventType="valueChanged" id="gf4-DV-NQc"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Preferred Unit of Distance" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z45-9J-tgg">
+                                <rect key="frame" x="16" y="20" width="168" height="18"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Radius " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1FE-XN-aIz">
+                                <rect key="frame" x="16" y="99" width="168" height="18"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="passed to API to search images in area define by this radius " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJd-yC-HoD">
+                                <rect key="frame" x="16" y="121" width="168" height="30.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="11"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="31" translatesAutoresizingMaskIntoConstraints="NO" id="VcV-J7-Hn9">
+                                <rect key="frame" x="16" y="161" width="94" height="29"/>
+                                <connections>
+                                    <action selector="radiusValueChanged:" destination="fGU-U1-uPa" eventType="valueChanged" id="6l2-F9-0bG"/>
+                                </connections>
+                            </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5m-e1-UXy">
+                                <rect key="frame" x="122" y="161" width="62" height="24"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1FE-XN-aIz" firstAttribute="trailing" secondItem="mdy-Oz-znO" secondAttribute="trailing" id="1Za-mN-l7s"/>
+                            <constraint firstItem="mdy-Oz-znO" firstAttribute="top" secondItem="z45-9J-tgg" secondAttribute="bottom" constant="11" id="3p0-YQ-E69"/>
+                            <constraint firstItem="1FE-XN-aIz" firstAttribute="leading" secondItem="mdy-Oz-znO" secondAttribute="leading" id="5tW-Cg-I2t"/>
+                            <constraint firstItem="kJd-yC-HoD" firstAttribute="top" secondItem="1FE-XN-aIz" secondAttribute="bottom" constant="4" id="8KT-qX-4Rq"/>
+                            <constraint firstItem="kJd-yC-HoD" firstAttribute="leading" secondItem="1FE-XN-aIz" secondAttribute="leading" id="FwM-Vi-VQD"/>
+                            <constraint firstItem="kJd-yC-HoD" firstAttribute="trailing" secondItem="V5m-e1-UXy" secondAttribute="trailing" id="GY6-4I-bkm"/>
+                            <constraint firstItem="z45-9J-tgg" firstAttribute="leading" secondItem="mdy-Oz-znO" secondAttribute="leading" id="MCa-oz-7qz"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="z45-9J-tgg" secondAttribute="leading" id="QB7-NE-oR8"/>
+                            <constraint firstItem="1FE-XN-aIz" firstAttribute="top" secondItem="mdy-Oz-znO" secondAttribute="bottom" constant="22" id="Xxg-bN-3Ah"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="z45-9J-tgg" secondAttribute="trailing" id="Xyd-6P-QyJ"/>
+                            <constraint firstItem="kJd-yC-HoD" firstAttribute="trailing" secondItem="1FE-XN-aIz" secondAttribute="trailing" id="aVe-wD-UiG"/>
+                            <constraint firstItem="z45-9J-tgg" firstAttribute="top" secondItem="doJ-rz-cW9" secondAttribute="bottom" constant="20" id="cUD-rW-yju"/>
+                            <constraint firstItem="V5m-e1-UXy" firstAttribute="leading" secondItem="VcV-J7-Hn9" secondAttribute="trailing" constant="12" id="cr4-UH-wy0"/>
+                            <constraint firstItem="VcV-J7-Hn9" firstAttribute="top" secondItem="V5m-e1-UXy" secondAttribute="top" id="deE-bj-Xfq"/>
+                            <constraint firstItem="VcV-J7-Hn9" firstAttribute="top" secondItem="kJd-yC-HoD" secondAttribute="bottom" constant="10" id="gsF-vr-VUW"/>
+                            <constraint firstItem="z45-9J-tgg" firstAttribute="trailing" secondItem="mdy-Oz-znO" secondAttribute="trailing" id="mia-nB-Rl7"/>
+                            <constraint firstItem="VcV-J7-Hn9" firstAttribute="leading" secondItem="kJd-yC-HoD" secondAttribute="leading" id="uQx-py-A8d"/>
+                        </constraints>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <connections>
+                        <outlet property="distanceUnitSegmentedControl" destination="mdy-Oz-znO" id="xo6-id-eSh"/>
+                        <outlet property="radiusLabel" destination="V5m-e1-UXy" id="bda-Ov-MKa"/>
+                        <outlet property="radiusStepper" destination="VcV-J7-Hn9" id="Yac-Dm-Nra"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tPF-Zn-FCl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1927" y="-139"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="BvE-V7-ebe">

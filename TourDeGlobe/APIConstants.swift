@@ -50,6 +50,11 @@ extension FlickrClient{
         static let RadiusUnit = "km"
     }
     
+    struct RadiusUnit {
+        static let Kms = Default.RadiusUnit
+        static let Miles = "mi"
+    }
+    
     struct  FlickResponseKeys {
         static let ImageURL = "url_m"
         static let ImageId = "id"

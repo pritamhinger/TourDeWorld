@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, UIPopoverPresentationControllerDelegate {
 
     // MARK: - IBOutlets
     @IBOutlet weak var mapView: MKMapView!
@@ -83,7 +83,16 @@ class MapViewController: UIViewController {
         (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack.save()
     }
     
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return UIModalPresentationStyle.None
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == AppConstants.SegueIdentifier.PreferenceSegue{
+            let controller = segue.destinationViewController as! PreferenceViewController
+            controller.modalPresentationStyle = UIModalPresentationStyle.Popover
+            controller.popoverPresentationController?.delegate = self
+        }
     }
 }
 

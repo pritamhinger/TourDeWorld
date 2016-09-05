@@ -109,7 +109,6 @@ extension MapViewController{
         }
         else{
             let viewFrame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y + view.frame.height - CGFloat(64), width: view.frame.width, height: CGFloat(64))
-            print(viewFrame)
             let bannerView = UIView(frame: viewFrame)
             bannerView.backgroundColor = UIColor.redColor()
             bannerView.tag = tag
@@ -132,7 +131,7 @@ extension MapViewController{
             bannerAlertMessage.text = "Tap Pin to Delete"
             bannerAlertMessage.textColor = UIColor.whiteColor()
             bannerAlertMessage.textAlignment = NSTextAlignment.Center;
-            let font:UIFont = UIFont(name: "AvenirNext-MediumItalic", size: 20)!
+            let font:UIFont = UIFont(name: "AvenirNext-Medium", size: 20)!
             bannerAlertMessage.font = font;
             bannerAlertMessage.sizeToFit();
             bannerAlertMessage.translatesAutoresizingMaskIntoConstraints = false;

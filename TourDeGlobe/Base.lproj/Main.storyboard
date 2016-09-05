@@ -109,7 +109,11 @@
                                 <rect key="frame" x="4" y="556" width="592" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="CH3-GJ-fZc"/>
-                                    <barButtonItem title="New Collection" id="cfT-nS-FoJ"/>
+                                    <barButtonItem title="New Collection" id="cfT-nS-FoJ">
+                                        <connections>
+                                            <action selector="refreshPhotoAlbum:" destination="s9o-8U-hY1" id="vqV-mS-L5t"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="78W-P9-A0u"/>
                                 </items>
                             </toolbar>
@@ -131,6 +135,7 @@
                     <connections>
                         <outlet property="collectionView" destination="Rld-EI-fRZ" id="Nj2-cl-Luv"/>
                         <outlet property="flowLayout" destination="lBZ-Oj-1I1" id="fyl-Mt-cGi"/>
+                        <outlet property="refreshPhotoAlbumButton" destination="cfT-nS-FoJ" id="Z7o-5m-gBX"/>
                         <outlet property="tappedPinMapView" destination="ncg-fH-SeX" id="cwp-6I-BXM"/>
                     </connections>
                 </viewController>

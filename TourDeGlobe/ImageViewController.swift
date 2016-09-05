@@ -17,6 +17,7 @@ class ImageViewController: UIViewController {
     @IBOutlet weak var tappedPinMapView: MKMapView!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var refreshPhotoAlbumButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +40,6 @@ class ImageViewController: UIViewController {
             if let images = location.images{
                 if images.count > 0{
                     imageDataSource = images.allObjects as? [Image]
-                    //collectionView.reloadData()
                 }
                 else{
                     fetchImagesFromFlickerForLocation(location)
@@ -49,8 +49,53 @@ class ImageViewController: UIViewController {
                 fetchImagesFromFlickerForLocation(location)
             }
             
-            self.navigationItem.title = "Flickr Images"
         }
+        
+        self.navigationItem.title = "Flickr Images"
+        self.navigationController?.navigationBar.backItem?.title = "Ok"
+        collectionView.allowsMultipleSelection = true
+    }
+    
+    @IBAction func refreshPhotoAlbum(sender: UIBarButtonItem) {
+        let selectedImagesIndexPaths = collectionView.indexPathsForSelectedItems()
+        var images = location?.images?.allObjects
+        let coreDataStack = (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
+        
+        if selectedImagesIndexPaths?.count > 0{
+            
+            for indexPath in selectedImagesIndexPaths!{
+                let cell = collectionView.cellForItemAtIndexPath(indexPath)
+                cell?.selected = false
+                cell?.alpha = 1.0
+                let image = images![indexPath.row] as! Image
+                coreDataStack.context.deleteObject(image)
+            }
+            
+            imageDataSource = location?.images?.allObjects as? [Image]
+            let sortedIndices = selectedImagesIndexPaths?.sort({ ($0.row > $1.row)})
+            for index in sortedIndices! {
+                images?.removeAtIndex(index.row)
+            }
+        }
+        else{
+            for image in images!{
+                coreDataStack.context.deleteObject(image as! Image)
+            }
+            
+            images?.removeAll()
+            imageDataSource = nil
+        }
+        
+        if(images?.count == 0){
+            self.imageDataSource = nil
+        }
+        else{
+            self.imageDataSource = images as? [Image]
+        }
+        
+        //self.collectionView.reloadData()
+        collectionView.reloadData()
+        setRefreshPhotoAlbumButtonTitle()
     }
     
     override func viewWillAppear(animated: Bool) {

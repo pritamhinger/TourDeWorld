@@ -41,26 +41,26 @@ class MapViewController: UIViewController {
         let tapGestureReconizer = UILongPressGestureRecognizer(target: self, action: #selector(MapViewController.tap(_:)))
         tapGestureReconizer.minimumPressDuration = 2
         view.addGestureRecognizer(tapGestureReconizer)
-        self.navigationController?.title = "Map View"
+        self.navigationItem.title = "Tour De Globe"
     }
     
     
     
     @IBAction func editingSwitched(sender: UIBarButtonItem) {
         
-        if sender.tag == 1{
-            sender.tag = 2
-            sender.title = "Done"
+        if sender.tag == AppConstants.ViewTag.EditButtonTag{
+            sender.tag = AppConstants.ViewTag.DoneButtonTag
+            sender.title = AppConstants.BarButtonTitle.Done
             sender.style = .Done
-            displayNotificationBanner(withTag: 10, visibility: true)
+            displayNotificationBanner(withTag: AppConstants.ViewTag.BannerViewTag, visibility: true)
             isDeleteModeOn = true
         }
         else{
-            sender.tag = 1
-            sender.title = "Edit"
+            sender.tag = AppConstants.ViewTag.EditButtonTag
+            sender.title = AppConstants.BarButtonTitle.Edit
             sender.style = .Plain
             isDeleteModeOn = false
-            displayNotificationBanner(withTag: 10, visibility: false)
+            displayNotificationBanner(withTag: AppConstants.ViewTag.BannerViewTag, visibility: false)
         }
         
     }

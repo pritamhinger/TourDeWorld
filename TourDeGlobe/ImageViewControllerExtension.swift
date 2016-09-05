@@ -19,6 +19,18 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
         return 0
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)
+        cell?.alpha = 0.25
+        setRefreshPhotoAlbumButtonTitle()
+    }
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        let cell = collectionView.cellForItemAtIndexPath(indexPath)
+        cell?.alpha = 1.0
+        setRefreshPhotoAlbumButtonTitle()
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(AppConstants.CellIdentifier.FlickrImageViewCell , forIndexPath: indexPath) as! FlickrImageCollectionViewCell
@@ -45,12 +57,8 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
             }
         }
         else{
-            print("Didn't made network request")
             cell.flickrImageView.image = UIImage(data: (image?.imageData)!)
         }
-        
-        print("Cell width : \(cell.frame.size.width)")
-        print("cell height : \(cell.frame.size.height)")
         
         return cell
     }
@@ -95,38 +103,33 @@ extension ImageViewController{
     }
     
     func reCalculateDimension(isLoad:Bool) {
-        if isLoad {
-            print("Called from View Did Load")
-        }
-        
-        var factor = 3.0
         var width = view.frame.size.width
         if(UIDeviceOrientationIsLandscape(UIDevice.currentDevice().orientation))
         {
-            print("landscape")
-            factor = 3.0
             width = collectionView.frame.size.width
         }
         else if(UIDeviceOrientationIsPortrait(UIDevice.currentDevice().orientation))
         {
-            print("Portrait")
-            factor = 3.0
             width = view.frame.size.width
         }
         
-        let itemSpace = CGFloat(factor)
-        let dimension = (width - (2 * itemSpace))/CGFloat(factor)
+        let itemSpace = CGFloat(3.0)
+        let dimension = (width - (2 * itemSpace))/CGFloat(3.0)
         flowLayout.minimumInteritemSpacing = itemSpace
         flowLayout.minimumLineSpacing = itemSpace
         flowLayout.itemSize = CGSizeMake(dimension, dimension)
         
         if isLoad{
-            print("Factor \(factor)")
-            print("itemSpace \(itemSpace)")
-            print("Dimension \(dimension)")
-            print("width \(collectionView.frame.size.width)")
-            print("height \(collectionView.frame.size.height)")
             flowLayout.invalidateLayout()
+        }
+    }
+    
+    func setRefreshPhotoAlbumButtonTitle() {
+        if(collectionView.indexPathsForSelectedItems()?.count > 0){
+            refreshPhotoAlbumButton.title = AppConstants.BarButtonTitle.RemoveSelectedImage
+        }
+        else{
+            refreshPhotoAlbumButton.title = AppConstants.BarButtonTitle.NewCollection
         }
     }
 }

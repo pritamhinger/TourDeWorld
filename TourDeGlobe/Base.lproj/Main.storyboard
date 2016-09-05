@@ -225,6 +225,8 @@
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="200" height="220"/>
                     <connections>
                         <outlet property="distanceUnitSegmentedControl" destination="mdy-Oz-znO" id="xo6-id-eSh"/>
                         <outlet property="radiusLabel" destination="V5m-e1-UXy" id="bda-Ov-MKa"/>

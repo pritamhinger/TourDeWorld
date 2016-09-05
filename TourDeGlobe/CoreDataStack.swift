@@ -108,6 +108,7 @@ extension CoreDataStack {
             
             if self.context.hasChanges{
                 do{
+                    print("Saving for Context")
                     try self.context.save()
                 }catch{
                     print("Error while saving main context: \(error)")
@@ -116,6 +117,7 @@ extension CoreDataStack {
                 // now we save in the background
                 self.persistingContext.performBlock(){
                     do{
+                        print("Saving for Persisting Context")
                         try self.persistingContext.save()
                     }catch{
                         print("Error while saving persisting context: \(error)")

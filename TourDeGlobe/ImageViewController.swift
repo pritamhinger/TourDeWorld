@@ -76,6 +76,10 @@ class ImageViewController: UIViewController {
             for index in sortedIndices! {
                 images?.removeAtIndex(index.row)
             }
+            
+            imageDataSource = images as? [Image]
+            coreDataStack.save()
+            collectionView.reloadData()
         }
         else{
             for image in images!{
@@ -84,17 +88,10 @@ class ImageViewController: UIViewController {
             
             images?.removeAll()
             imageDataSource = nil
+            coreDataStack.save()
+            fetchImagesFromFlickerForLocation(location!)
         }
         
-        if(images?.count == 0){
-            self.imageDataSource = nil
-        }
-        else{
-            self.imageDataSource = images as? [Image]
-        }
-        
-        //self.collectionView.reloadData()
-        collectionView.reloadData()
         setRefreshPhotoAlbumButtonTitle()
     }
     

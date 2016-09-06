@@ -14,6 +14,9 @@ class ImageViewController: UIViewController {
     // MARK: - Properties
     var location:Location?
     var imageDataSource: [Image]?
+    var per_page = 250
+    var total = 0
+    var page = 1
     
     // MARK: - IBOutlets
     @IBOutlet weak var tappedPinMapView: MKMapView!
@@ -141,7 +144,8 @@ class ImageViewController: UIViewController {
             }
             else{
                 // Or else we make a netwotk call to Flickr Servers using Flickr APIs
-                fetchImagesFromFlickerForLocation(location!)
+                let randomPage = generateRandomPage()
+                fetchImagesFromFlickerForLocation(location!, page: randomPage)
             }
             
         }
@@ -163,7 +167,8 @@ class ImageViewController: UIViewController {
             coreDataStack.save()
             
             // make a netwotk call to Flickr Servers using Flickr APIs
-            fetchImagesFromFlickerForLocation(location!)
+            let randomPage = generateRandomPage()
+            fetchImagesFromFlickerForLocation(location!, page: randomPage)
         }
         
         // Setting title as per the photos selected in Collection View

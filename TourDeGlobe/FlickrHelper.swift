@@ -90,6 +90,14 @@ extension FlickrClient{
             queryParameters[FlickrClient.QueryParameterKeys.RadiusUnits] = FlickrClient.Default.RadiusUnit
         }
         
+        if let perPage = userDefaults.valueForKey(FlickrClient.QueryParameterKeys.PerPage) as? Int{
+            queryParameters[FlickrClient.QueryParameterKeys.PerPage] = "\(perPage)"
+        }
+        else{
+            userDefaults.setInteger(FlickrClient.Default.PerPage, forKey: FlickrClient.QueryParameterKeys.PerPage)
+            queryParameters[FlickrClient.QueryParameterKeys.PerPage] = "\(FlickrClient.Default.PerPage)"
+        }
+        
         return queryParameters
     }
 }

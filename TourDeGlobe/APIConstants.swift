@@ -35,6 +35,8 @@ extension FlickrClient{
         static let NoJSONCallback = "nojsoncallback"
         static let SafeSearch = "safe_search"
         static let Extras = "extras"
+        static let Page = "page"
+        static let PerPage = "per_page"
     }
     
     // MARK: - Values of Query Parameter which are Constant always
@@ -49,6 +51,7 @@ extension FlickrClient{
     struct Default {
         static let Radius = "5"
         static let RadiusUnit = "km"
+        static let PerPage = 10
     }
     
     // MARK: - Radius Units

@@ -159,7 +159,7 @@
                         <viewControllerLayoutGuide type="bottom" id="0o5-z8-OGs"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GvH-Qy-hNE">
-                        <rect key="frame" x="0.0" y="0.0" width="200" height="220"/>
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="270"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="mdy-Oz-znO">
@@ -184,6 +184,12 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5m-e1-UXy">
+                                <rect key="frame" x="122" y="161" width="62" height="24"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="passed to API to search images in area define by this radius " lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJd-yC-HoD">
                                 <rect key="frame" x="16" y="121" width="168" height="30.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="11"/>
@@ -196,25 +202,44 @@
                                     <action selector="radiusValueChanged:" destination="fGU-U1-uPa" eventType="valueChanged" id="6l2-F9-0bG"/>
                                 </connections>
                             </stepper>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 " textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V5m-e1-UXy">
-                                <rect key="frame" x="122" y="161" width="62" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Number Of Images Per Call " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9L-0d-d0M">
+                                <rect key="frame" x="16" y="198" width="168" height="18"/>
+                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h3u-IQ-tgO">
+                                <rect key="frame" x="122" y="224" width="62" height="24"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minimumValue="5" maximumValue="250" stepValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="IkN-B1-bSG">
+                                <rect key="frame" x="16" y="224" width="94" height="29"/>
+                                <connections>
+                                    <action selector="perPageImageCountChanged:" destination="fGU-U1-uPa" eventType="valueChanged" id="VZX-uW-lw6"/>
+                                </connections>
+                            </stepper>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="1FE-XN-aIz" firstAttribute="trailing" secondItem="mdy-Oz-znO" secondAttribute="trailing" id="1Za-mN-l7s"/>
+                            <constraint firstItem="i9L-0d-d0M" firstAttribute="leading" secondItem="kJd-yC-HoD" secondAttribute="leading" id="27o-aw-Zsv"/>
+                            <constraint firstItem="h3u-IQ-tgO" firstAttribute="leading" secondItem="IkN-B1-bSG" secondAttribute="trailing" constant="12" id="3Tr-mg-juF"/>
                             <constraint firstItem="mdy-Oz-znO" firstAttribute="top" secondItem="z45-9J-tgg" secondAttribute="bottom" constant="11" id="3p0-YQ-E69"/>
                             <constraint firstItem="1FE-XN-aIz" firstAttribute="leading" secondItem="mdy-Oz-znO" secondAttribute="leading" id="5tW-Cg-I2t"/>
+                            <constraint firstItem="i9L-0d-d0M" firstAttribute="trailing" secondItem="kJd-yC-HoD" secondAttribute="trailing" id="7O3-xE-JZg"/>
                             <constraint firstItem="kJd-yC-HoD" firstAttribute="top" secondItem="1FE-XN-aIz" secondAttribute="bottom" constant="4" id="8KT-qX-4Rq"/>
                             <constraint firstItem="kJd-yC-HoD" firstAttribute="leading" secondItem="1FE-XN-aIz" secondAttribute="leading" id="FwM-Vi-VQD"/>
                             <constraint firstItem="kJd-yC-HoD" firstAttribute="trailing" secondItem="V5m-e1-UXy" secondAttribute="trailing" id="GY6-4I-bkm"/>
                             <constraint firstItem="z45-9J-tgg" firstAttribute="leading" secondItem="mdy-Oz-znO" secondAttribute="leading" id="MCa-oz-7qz"/>
+                            <constraint firstItem="h3u-IQ-tgO" firstAttribute="top" secondItem="IkN-B1-bSG" secondAttribute="top" id="P0r-wg-nbe"/>
                             <constraint firstAttribute="leadingMargin" secondItem="z45-9J-tgg" secondAttribute="leading" id="QB7-NE-oR8"/>
+                            <constraint firstItem="h3u-IQ-tgO" firstAttribute="trailing" secondItem="i9L-0d-d0M" secondAttribute="trailing" id="TKO-1E-rBD"/>
+                            <constraint firstItem="i9L-0d-d0M" firstAttribute="top" secondItem="VcV-J7-Hn9" secondAttribute="bottom" constant="8" id="WR8-4n-yvg"/>
                             <constraint firstItem="1FE-XN-aIz" firstAttribute="top" secondItem="mdy-Oz-znO" secondAttribute="bottom" constant="22" id="Xxg-bN-3Ah"/>
                             <constraint firstAttribute="trailingMargin" secondItem="z45-9J-tgg" secondAttribute="trailing" id="Xyd-6P-QyJ"/>
+                            <constraint firstItem="IkN-B1-bSG" firstAttribute="leading" secondItem="i9L-0d-d0M" secondAttribute="leading" id="aIx-QO-GgK"/>
                             <constraint firstItem="kJd-yC-HoD" firstAttribute="trailing" secondItem="1FE-XN-aIz" secondAttribute="trailing" id="aVe-wD-UiG"/>
                             <constraint firstItem="z45-9J-tgg" firstAttribute="top" secondItem="doJ-rz-cW9" secondAttribute="bottom" constant="20" id="cUD-rW-yju"/>
                             <constraint firstItem="V5m-e1-UXy" firstAttribute="leading" secondItem="VcV-J7-Hn9" secondAttribute="trailing" constant="12" id="cr4-UH-wy0"/>
@@ -222,14 +247,17 @@
                             <constraint firstItem="VcV-J7-Hn9" firstAttribute="top" secondItem="kJd-yC-HoD" secondAttribute="bottom" constant="10" id="gsF-vr-VUW"/>
                             <constraint firstItem="z45-9J-tgg" firstAttribute="trailing" secondItem="mdy-Oz-znO" secondAttribute="trailing" id="mia-nB-Rl7"/>
                             <constraint firstItem="VcV-J7-Hn9" firstAttribute="leading" secondItem="kJd-yC-HoD" secondAttribute="leading" id="uQx-py-A8d"/>
+                            <constraint firstItem="IkN-B1-bSG" firstAttribute="top" secondItem="i9L-0d-d0M" secondAttribute="bottom" constant="8" id="ygR-03-MoE"/>
                         </constraints>
                     </view>
-                    <value key="contentSizeForViewInPopover" type="size" width="200" height="220"/>
+                    <value key="contentSizeForViewInPopover" type="size" width="200" height="270"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="200" height="220"/>
+                    <size key="freeformSize" width="200" height="270"/>
                     <connections>
                         <outlet property="distanceUnitSegmentedControl" destination="mdy-Oz-znO" id="xo6-id-eSh"/>
+                        <outlet property="perPageCountLabel" destination="h3u-IQ-tgO" id="RRI-Ld-WgW"/>
+                        <outlet property="perPageCountStepper" destination="IkN-B1-bSG" id="2Qy-gs-CbW"/>
                         <outlet property="radiusLabel" destination="V5m-e1-UXy" id="bda-Ov-MKa"/>
                         <outlet property="radiusStepper" destination="VcV-J7-Hn9" id="Yac-Dm-Nra"/>
                     </connections>

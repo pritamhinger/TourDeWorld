@@ -15,6 +15,8 @@ class PreferenceViewController: UIViewController {
     @IBOutlet weak var radiusLabel: UILabel!
     @IBOutlet weak var radiusStepper: UIStepper!
     
+    @IBOutlet weak var perPageCountStepper: UIStepper!
+    @IBOutlet weak var perPageCountLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +43,16 @@ class PreferenceViewController: UIViewController {
             userDefaults.setValue(FlickrClient.Default.RadiusUnit, forKey: FlickrClient.QueryParameterKeys.RadiusUnits)
             radiusStepper.maximumValue = Double(32)
         }
+        
+        if let perPageCount = userDefaults.valueForKey(FlickrClient.QueryParameterKeys.PerPage) as? Int{
+            perPageCountLabel.text = "\(perPageCount)"
+        }
+        else{
+            perPageCountLabel.text = "\(FlickrClient.Default.PerPage)"
+            userDefaults.setInteger(FlickrClient.Default.PerPage, forKey: FlickrClient.QueryParameterKeys.PerPage)
+        }
+        
+        perPageCountStepper.value = Double(perPageCountLabel.text!)!
     }
 
     @IBAction func unitChanged(sender: UISegmentedControl) {
@@ -62,6 +74,14 @@ class PreferenceViewController: UIViewController {
                 userDefaults.setValue(radiusLabel.text!, forKey: FlickrClient.QueryParameterKeys.Radius)
             }
         }
+    }
+    
+    @IBAction func perPageImageCountChanged(sender: UIStepper) {
+        let value = sender.value
+        print("Per Page Count \(value)")
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        perPageCountLabel.text = "\(Int(value))"
+        userDefaults.setInteger(Int(value), forKey: FlickrClient.QueryParameterKeys.PerPage)
     }
     
     @IBAction func radiusValueChanged(sender: UIStepper) {

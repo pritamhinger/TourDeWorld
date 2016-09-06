@@ -33,31 +33,35 @@ class Image: NSManagedObject {
     }
     
     // MARK: - Class Methods for Parsing
-    class func parseImageJSON(jsonReponse: [[String:AnyObject]], location:Location, context:NSManagedObjectContext) -> [Image]{
+    class func parseImageJSON(jsonReponse: [[String:AnyObject]], location:Location, context:NSManagedObjectContext, completionHandler: (images: [Image]) -> Void) -> Void{
         
-        // Initializing empty collection of Image objects
-        var images = [Image]()
-        
-        // Iterating and Parsing JSON Response from Flickr and creating Model Objects.
-        for currentImageJSON in jsonReponse {
-            let imageURL = currentImageJSON[FlickrClient.FlickResponseKeys.ImageURL] as! String
-            let width = NSNumber(double: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageWidth] as! NSString).doubleValue)
-            let height = NSNumber(double: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageHeight] as! NSString).doubleValue)
-            let flickrId = currentImageJSON[FlickrClient.FlickResponseKeys.ImageId] as! String
-            let title = currentImageJSON[FlickrClient.FlickResponseKeys.Title] as! String
-            let owner = currentImageJSON[FlickrClient.FlickResponseKeys.ImageOwner] as! String
-            let secret = currentImageJSON[FlickrClient.FlickResponseKeys.Secret] as! String
-            let farm = NSNumber(int: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageWidth] as! NSString).intValue)
+        performUIUpdatesOnMainQueue{
+            // Initializing empty collection of Image objects
+            var images = [Image]()
             
-            // Passing parsed value to Image's initilizer. Also passing Context and Location.
-            let currentImage: Image? = Image(imageURL: imageURL, width: width, height: height, flickrId: flickrId, title: title, owner: owner, secret: secret, farm: farm, location: location, context: context)
-            if let currentImage = currentImage{
-                // If a valid object is created then adding it to collecion of Image Objects
-                images.append(currentImage)
-            }   
+            // Iterating and Parsing JSON Response from Flickr and creating Model Objects.
+            for currentImageJSON in jsonReponse {
+                let imageURL = currentImageJSON[FlickrClient.FlickResponseKeys.ImageURL] as! String
+                let width = NSNumber(double: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageWidth] as! NSString).doubleValue)
+                let height = NSNumber(double: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageHeight] as! NSString).doubleValue)
+                let flickrId = currentImageJSON[FlickrClient.FlickResponseKeys.ImageId] as! String
+                let title = currentImageJSON[FlickrClient.FlickResponseKeys.Title] as! String
+                let owner = currentImageJSON[FlickrClient.FlickResponseKeys.ImageOwner] as! String
+                let secret = currentImageJSON[FlickrClient.FlickResponseKeys.Secret] as! String
+                let farm = NSNumber(int: (currentImageJSON[FlickrClient.FlickResponseKeys.ImageWidth] as! NSString).intValue)
+                
+                
+                // Passing parsed value to Image's initilizer. Also passing Context and Location.
+                let currentImage: Image? = Image(imageURL: imageURL, width: width, height: height, flickrId: flickrId, title: title, owner: owner, secret: secret, farm: farm, location: location, context: context)
+                if let currentImage = currentImage{
+                    // If a valid object is created then adding it to collecion of Image Objects
+                    images.append(currentImage)
+                    
+                }
+            }
+            
+            // Returning Image Objects
+            completionHandler(images: images);
         }
-        
-        // Returning Image Objects
-        return images
     }
 }

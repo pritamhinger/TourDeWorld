@@ -47,7 +47,9 @@ extension ImageViewController: UICollectionViewDelegate, UICollectionViewDataSou
             activityIndicatorView.tag = 4
             
             cell.contentView.addSubview(activityIndicatorView)
-            activityIndicatorView.startAnimating()
+            performUIUpdatesOnMainQueue{
+                activityIndicatorView.startAnimating()
+            }
             
             FlickrClient.sharedInstance().getImageDataFromURL((image?.imageURL)!){ (data, error) in
                 performUIUpdatesOnMainQueue{
@@ -88,11 +90,12 @@ extension ImageViewController{
                         if let photoJSONArray = photosJSON[FlickrClient.FlickResponseKeys.Photo] as? [[String:AnyObject]]{
                             let coreDataStack = (UIApplication.sharedApplication().delegate as! AppDelegate).coreDataStack
                             coreDataStack.performBackgroundBatchOperation({(workerContext) in
-                                let images = Image.parseImageJSON(photoJSONArray, location: location, context: workerContext.parentContext!)
-                                location.images = NSSet(array: images)
-                                performUIUpdatesOnMainQueue{
-                                    self.imageDataSource = images
-                                    self.collectionView.reloadData()
+                                Image.parseImageJSON(photoJSONArray, location: location, context: workerContext.parentContext!){ (images) in
+                                    performUIUpdatesOnMainQueue{
+                                        location.images = NSSet(array: images)
+                                        self.imageDataSource = images
+                                        self.collectionView.reloadData()
+                                    }
                                 }
                             })
                         }

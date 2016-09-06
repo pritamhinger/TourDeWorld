@@ -78,7 +78,6 @@ class PreferenceViewController: UIViewController {
     
     @IBAction func perPageImageCountChanged(sender: UIStepper) {
         let value = sender.value
-        print("Per Page Count \(value)")
         let userDefaults = NSUserDefaults.standardUserDefaults()
         perPageCountLabel.text = "\(Int(value))"
         userDefaults.setInteger(Int(value), forKey: FlickrClient.QueryParameterKeys.PerPage)

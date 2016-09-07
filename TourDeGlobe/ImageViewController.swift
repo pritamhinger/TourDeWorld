@@ -138,12 +138,9 @@ class ImageViewController: UIViewController {
             // Saving changes to Context
             coreDataStack.save()
             
-            if imageDataSource?.count > 0 {
-                // If ImageDataSource still have images then we simply reload the Collection View
-                collectionView.reloadData()
-            }
-            else{
-                // Or else we make a netwotk call to Flickr Servers using Flickr APIs
+            collectionView.reloadData()
+            if imageDataSource?.count == 0 {
+                // Making a netwotk call to Flickr Servers using Flickr APIs as we have manually deleted all images
                 let randomPage = generateRandomPage()
                 fetchImagesFromFlickerForLocation(location!, page: randomPage)
             }

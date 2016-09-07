@@ -151,6 +151,13 @@ extension ImageViewController{
         
         var page = 1
         
+        // This is the root cause of bug where same set of images were returned from Flickr.
+        // Currently Flickr documentation states that we can only access 4000 images from 
+        // Flickr. So if we choose a page and perPage value such that the combination crosses 4000 image,
+        // then flickr will reply with same set of images everytime. To fix this we have to make sure the 
+        // random page number which we generate along with perpage value results in a value less that 4000.
+        // To achieve this we are checking if total count for this LatLong is more than 4000. If so, then we set 
+        // total to 4000 so as when we divide total with perPage to get page nevers crossses the threshold.
         if(total > 4000){
             total = 4000
         }

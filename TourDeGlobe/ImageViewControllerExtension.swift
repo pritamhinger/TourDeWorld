@@ -151,11 +151,15 @@ extension ImageViewController{
         
         var page = 1
         
+        if(total > 4000){
+            total = 4000
+        }
+        
         if let perPageCount = userDefaults.valueForKey(FlickrClient.QueryParameterKeys.PerPage) as? Int{
-            page = total/perPageCount
+            page = total/perPageCount + 1
         }
         else{
-            page = total/FlickrClient.Default.PerPage
+            page = total/FlickrClient.Default.PerPage + 1
             userDefaults.setInteger(FlickrClient.Default.PerPage, forKey: FlickrClient.QueryParameterKeys.PerPage)
         }
         

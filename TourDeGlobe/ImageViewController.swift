@@ -165,7 +165,7 @@ class ImageViewController: UIViewController {
             
             // save changes to context
             coreDataStack.save()
-            
+            collectionView.reloadData()
             // make a netwotk call to Flickr Servers using Flickr APIs
             let randomPage = generateRandomPage()
             fetchImagesFromFlickerForLocation(location!, page: randomPage)
